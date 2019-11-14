@@ -11,3 +11,4 @@ The [Elixir folder](https://github.com/BenRongey/BenApprenticeship/tree/master/e
 Additional work is needed for the best possible understanding of:
 * [Keyword Lists](https://elixir-lang.org/getting-started/keywords-and-maps.html#keyword-lists)
 * When to use which Elixir data structure in general ([maybe learn this](https://dev.to/talum/which-data-structure-should-i-use-an-elixir-cheat-sheet-3epe))
+* Anonymous / Lambda Functions
