@@ -92,10 +92,10 @@ defmodule Processes do
     pid = spawn_link(&yelling_echo_loop/0)
 
     send(pid, {self(), "o"})
-    assert_receive ___
+    assert_receive "O"
 
     send(pid, {self(), "hai"})
-    assert_receive ___
+    assert_receive "HAI"
   end
 
   def state(value) do
@@ -118,11 +118,11 @@ defmodule Processes do
       end)
 
     send(pid, {self(), :get})
-    assert_receive ___
+    assert_receive "foo"
 
     send(pid, {self(), :set, "bar"})
     send(pid, {self(), :get})
-    assert_receive ___
+    assert_receive "bar"
   end
 
   koan "Waiting for a message can get boring" do
@@ -135,7 +135,7 @@ defmodule Processes do
       end
     end)
 
-    assert_receive ___
+    assert_receive {:waited_too_long, "I am impatient"}
   end
 
   koan "Trapping will allow you to react to someone terminating the process" do
@@ -157,19 +157,19 @@ defmodule Processes do
 
     Process.exit(pid, :random_reason)
 
-    assert_receive ___
+    assert_receive flag
   end
 
   koan "Parent processes can trap exits for children they are linked to" do
     Process.flag(:trap_exit, true)
     spawn_link(fn -> Process.exit(self(), :normal) end)
 
-    assert_receive {:EXIT, _pid, ___}
+    assert_receive {:EXIT, _pid, flag}
   end
 
   koan "If you monitor your children, you'll be automatically informed of their departure" do
     spawn_monitor(fn -> Process.exit(self(), :normal) end)
 
-    assert_receive {:DOWN, _ref, :process, _pid, ___}
+    assert_receive {:DOWN, _ref, :process, _pid, flag}
   end
 end
