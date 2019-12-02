@@ -1,3 +1,4 @@
 elixir/big.txt
 .DS_Store
 test.txt
+*.class
